@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { FormGroup, FormControl, InputGroup, Glyphicon } from 'react-bootstrap'
 
+import Profile from './Profile'
+
 import './App.css'
 
 class App extends Component {
@@ -8,7 +10,8 @@ class App extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			query: ''
+			query: '',
+			artist: null
 		}
 	}
 
@@ -28,7 +31,13 @@ class App extends Component {
 		    }
 		})
 		.then(res => res.json())
-		.then(json => console.log(json))
+		.then(json => {
+			const artist = json.artists.items[0]
+
+			console.log(artist)
+
+			this.setState({artist})
+		})
 	}
 
 	render() {
@@ -55,10 +64,9 @@ class App extends Component {
 					</InputGroup>
 				</FormGroup>
 
-				<div className="Profile">
-					<div>Artist Picture</div>
-					<div>Artist Name</div>
-				</div>
+				<Profile
+					artist={this.state.artist}
+				/>
 
 				<div className="Gallery">
 				 	Gallery
